@@ -1,5 +1,6 @@
 # BOJ Badge
 
+![Heroku App Status](https://heroku-shields.herokuapp.com/boj-badge) ![GitHub last commit](https://img.shields.io/github/last-commit/joonas-yoon/boj-badge?color=orange) ![GitHub issues](https://img.shields.io/github/issues/joonas-yoon/boj-badge) ![GitHub](https://img.shields.io/github/license/joonas-yoon/boj-badge)
 
 ## Examples
 
