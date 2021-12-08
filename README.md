@@ -8,7 +8,7 @@
 - 맞은 문제 수 : ![solved](https://boj-badge.herokuapp.com/?id=joonas&color=green)
 - 맞았지만 만점을 받지 못한 문제: ![psolved](https://boj-badge.herokuapp.com/?id=joonas&label=BOJ%20partial%20solved&query=psolved&color=orange)
 - 시도했지만 맞지 못한 문제: ![failed](https://boj-badge.herokuapp.com/?id=joonas&label=BOJ%20unsolved&query=failed&color=red)
-- 제출 수 : ![submitted](https://boj-badge.herokuapp.com/?id=joonas&label=custom&query=submitted&color=lightgrey)
+- 제출 수 : ![submitted](https://boj-badge.herokuapp.com/?id=joonas&label=BOJ%20submitted&query=submitted&color=lightgrey)
 - 커스텀 라벨 : ![custom-label](https://boj-badge.herokuapp.com/?id=joonas&label=custom&query=id)
 - 여러 가지 색상 : ![color1](https://boj-badge.herokuapp.com/?id=joonas) ![color2](https://boj-badge.herokuapp.com/?id=joonas&color=blue) ![color3](https://boj-badge.herokuapp.com/?id=joonas&color=aqua) ![color5](https://boj-badge.herokuapp.com/?id=joonas&color=purple) ![color6](https://boj-badge.herokuapp.com/?id=joonas&color=yellow) ![color7](https://boj-badge.herokuapp.com/?id=joonas&color=lightgrey) ![color8](https://boj-badge.herokuapp.com/?id=joonas&color=black) ![color9](https://boj-badge.herokuapp.com/?id=joonas&color=%23E68364)
 
