@@ -1,4 +1,3 @@
-anybadge==1.8.0
 beautifulsoup4==4.9.3
 bs4==0.0.1
 Flask==0.10.1
@@ -8,6 +7,7 @@ Flask-SQLAlchemy==2.5.1
 gunicorn==20.1.0
 psycopg2==2.9.2
 psycopg2-binary==2.9.2
+pybadges==2.2.1
 requests==2.24.0
 SQLAlchemy==1.4.27
 urllib3==1.25.10
