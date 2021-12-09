@@ -4,13 +4,11 @@
 
 ## Examples
 
-- 랭킹 : ![rank](https://boj-badge.herokuapp.com/?id=joonas&query=rank)
-- 맞은 문제 수 : ![solved](https://boj-badge.herokuapp.com/?id=joonas&color=green)
-- 맞았지만 만점을 받지 못한 문제: ![psolved](https://boj-badge.herokuapp.com/?id=joonas&query=psolved&color=orange)
-- 시도했지만 맞지 못한 문제: ![failed](https://boj-badge.herokuapp.com/?id=joonas&query=failed&color=red)
-- 제출 수 : ![submitted](https://boj-badge.herokuapp.com/?id=joonas&query=submitted&color=lightgrey)
-- 커스텀 라벨 : ![custom-label](https://boj-badge.herokuapp.com/?id=joonas&label=custom&query=id)
-- 여러 가지 색상 : ![color6](https://boj-badge.herokuapp.com/?id=joonas&color=yellow&label=BOJ+badge) ![color7](https://boj-badge.herokuapp.com/?id=joonas&color=lightgrey&label=BOJ+badge) ![color8](https://boj-badge.herokuapp.com/?id=joonas&color=black&label=BOJ+badge&query=max_streak) ![color9](https://boj-badge.herokuapp.com/?id=joonas&color=%23E68364&label=BOJ+badge)
+- 랭킹 : ![rank](https://boj-badge.herokuapp.com/?id=joonas&query=rank) ![rank-a](https://boj-badge.herokuapp.com/?id=joonas&query=rank+b&color=%2300b4fc)
+- 문제 수 : ![solved](https://boj-badge.herokuapp.com/?id=joonas&color=%23009874&query=solved+a) ![psolved](https://boj-badge.herokuapp.com/?id=joonas&query=psolved&color=%23efc050) ![failed](https://boj-badge.herokuapp.com/?id=joonas&query=failed&color=red)
+- 커스텀 라벨 : ![custom-label](https://boj-badge.herokuapp.com/?id=joonas&label=joonas+solved&query=solved)
+- 최장 스트릭 : ![color8](https://boj-badge.herokuapp.com/?id=joonas&color=black&label=BOJ+badge&query=max_streak)
+- 여러 가지 색상 : ![color6](https://boj-badge.herokuapp.com/?id=joonas&color=yellow&label=BOJ+badge) ![color7](https://boj-badge.herokuapp.com/?id=joonas&color=lightgrey&label=BOJ+badge) ![color9](https://boj-badge.herokuapp.com/?id=joonas&color=%23E68364&label=BOJ+badge)
 
 ## Quickstart
 
@@ -37,7 +35,7 @@ https://boj-badge.herokuapp.com/?id={id}&query={query}&color={color}&label={labe
 
 **query**
 
-`query`에 따라 조회하는 정보와 결과는 아래와 같습니다.
+`query`에 따라 조회하는 정보와 결과는 아래와 같습니다. 생략한다면, `solved`를 조회합니다.
 
 `rank`의 경우, `/?id={id}&query=rank` 와 같이 사용하시면 됩니다.
 
@@ -48,14 +46,14 @@ https://boj-badge.herokuapp.com/?id={id}&query={query}&color={color}&label={labe
 | `rank+a` | **등수**와 **전체 등수**를 표시합니다. | ![example-rank-a](https://boj-badge.herokuapp.com/?id=joonas&query=rank+a) |
 | `rank+b` | 등수를 **백분율**로 표시합니다. | ![example-rank-b](https://boj-badge.herokuapp.com/?id=joonas&query=rank+b) |
 | `rank+c` | **랭킹 몇 페이지**에 있는 지 표시합니다. (정확하지 않습니다) | ![example-rank-c](https://boj-badge.herokuapp.com/?id=joonas&query=rank+c) |
-| `solved` (기본값) | **맞은 문제 수**를 표시합니다. | ![example-solved](https://boj-badge.herokuapp.com/?id=joonas&query=solved) |
-| `solved+a` | **맞은 문제 수**와 **채점 가능한 전체 문제 수**를 표시합니다. | ![example-solved-a](https://boj-badge.herokuapp.com/?id=joonas&query=solved+a) |
+| `solved` | **맞은 문제 수**를 표시합니다. | ![example-solved](https://boj-badge.herokuapp.com/?id=joonas&query=solved) |
+| `solved+a` | **채점 가능한 전체 문제 수**를 함께 표시합니다. | ![example-solved-a](https://boj-badge.herokuapp.com/?id=joonas&query=solved+a) |
 | `solved+b` | 맞은 문제 수를 **백분율**로 표시합니다. | ![example-solved-b](https://boj-badge.herokuapp.com/?id=joonas&query=solved+b) |
 | `psolved` | **맞았지만 만점을 받지 못한 문제**를 표시합니다. | ![example-psolved](https://boj-badge.herokuapp.com/?id=joonas&query=psolved) |
-| `psolved+a` | **맞았지만 만점을 받지 못한 문제**와 **채점 가능한 전체 문제 수**를 표시합니다. | ![example-psolved-a](https://boj-badge.herokuapp.com/?id=joonas&query=psolved+a) |
+| `psolved+a` | **채점 가능한 전체 문제 수**를 함께 표시합니다. | ![example-psolved-a](https://boj-badge.herokuapp.com/?id=joonas&query=psolved+a) |
 | `psolved+b` | 맞았지만 만점을 받지 못한 문제를 **백분율**로 표시합니다. | ![example-psolved-b](https://boj-badge.herokuapp.com/?id=joonas&query=psolved+b) |
 | `failed` | **시도했지만 맞지 못한 문제**를 표시합니다. | ![example-failed](https://boj-badge.herokuapp.com/?id=joonas&query=failed) |
-| `failed+a` | **시도했지만 맞지 못한 문제**와 **채점 가능한 전체 문제 수**를 표시합니다. | ![example-failed-a](https://boj-badge.herokuapp.com/?id=joonas&query=failed+a) |
+| `failed+a` | **채점 가능한 전체 문제 수**를 함께 표시합니다. | ![example-failed-a](https://boj-badge.herokuapp.com/?id=joonas&query=failed+a) |
 | `failed+b` | 시도했지만 맞지 못한 문제를 **백분율**로 표시합니다. | ![example-failed-b](https://boj-badge.herokuapp.com/?id=joonas&query=failed+b) |
 | `submitted` | **제출 수**를 표시합니다. | ![example-submitted](https://boj-badge.herokuapp.com/?id=joonas&query=submitted) |
 | `max_streak` | 연속으로 문제를 푼 **최장 스트릭**을 표시합니다. | ![example-max_streak](https://boj-badge.herokuapp.com/?id=joonas&query=max_streak) |
@@ -88,7 +86,11 @@ Hex code로 직접 색상을 지정할 수 있습니다. 단, `#` 을 `%23` 으�
 
 **label**
 
-생략한다면 `query`에 맞게 적당하게 채워집니다.
+label 부분의 텍스트를 직접 지정할 수 있습니다. 생략한다면 `query`에 맞게 채워집니다.
+
+| | 예시 | 결과 |
+| :-- | :-- | :--: |
+| `label` | `![](https://boj-badge.herokuapp.com/?id=joonas&label=alrogithm-solved&query=solved+a)` | ![](https://boj-badge.herokuapp.com/?id=joonas&label=alrogithm-solved&query=solved+a) |
 
 ## Requirements
 
