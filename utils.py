@@ -63,7 +63,8 @@ def query_detail(q):
 
 
 def deco_text(query, value):
-  import counter
+  import storage
+  DB_NAME = 'counter'
 
   key = query_to_key(query)
   qtype = query_detail(query)
@@ -72,7 +73,7 @@ def deco_text(query, value):
   if key == 'max_streak':
     return v + ' day' + ('s' if int(value) > 1 else '')
   elif key == 'rank':
-    ranks = counter.get("rankings")
+    ranks = storage.get(DB_NAME, 'rankings')
     if qtype == 'a':
       return f'{v} / {str(ranks)}'
     elif qtype == 'b':
@@ -82,10 +83,10 @@ def deco_text(query, value):
   elif key == 'solved' \
     or key == 'psolved' \
     or key == 'failed':
-    problems = counter.get('problems_available')
+    problems = storage.get(DB_NAME, 'problems_available')
     if qtype == 'a':
       return f'{v} / {str(problems)}'
     elif qtype == 'b':
-      problems = counter.get('problems_available')
+      problems = storage.get(DB_NAME, 'problems_available')
       return '{:.2f}%'.format(int(value) / problems * 100)
   return str(value)

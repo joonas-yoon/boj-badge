@@ -1,11 +1,13 @@
-import counter
 import requests
 from bs4 import BeautifulSoup as bs
 from datetime import datetime, timedelta
 from time import sleep
 from utils import pack2str, get_as, get_streak
 
+import storage as JsonStore
+
 HOST = 'https://www.acmicpc.net'
+DB_NAME = 'counter'
 
 def get_user(username):
   href = HOST + f'/user/{username}'
@@ -36,7 +38,7 @@ def get_user(username):
 
 
 def do_count():
-  count = counter.get_all()
+  count = JsonStore.get_all(DB_NAME)
   now = datetime.now()
 
   if 'last_sync' in count:
@@ -55,7 +57,7 @@ def do_count():
   count['problems_total'] = pc[0]
   count['problems_available'] = pc[1]
   count['problems_solved'] = pc[2]
-  counter.save(count)
+  JsonStore.save(DB_NAME, count)
 
   # get ranking, users
   res = requests.get(f'{HOST}/ranklist')
@@ -72,6 +74,6 @@ def do_count():
     count['rankings'] = int(ranklist[-1].find('td').text)
   except:
     count['rankings'] = total_users
-  counter.save(count)
+  JsonStore.save(DB_NAME, count)
 
   print(count)
