@@ -49,14 +49,15 @@ class User(db.Model):
   __tablename__ = 'user'
 
   id = db.Column(db.String(32), primary_key=True)
-  rank = db.Column(db.Integer, unique=True)
-  solved = db.Column(db.Integer)
-  psolved = db.Column(db.Integer)
-  failed = db.Column(db.Integer)
-  submitted = db.Column(db.Integer)
-  max_streak = db.Column(db.Integer)
-  last_sync = db.Column(db.DateTime, nullable=False,
+  rank = db.Column(db.Integer, nullable=True)
+  solved = db.Column(db.Integer, nullable=True)
+  psolved = db.Column(db.Integer, nullable=True)
+  failed = db.Column(db.Integer, nullable=True)
+  submitted = db.Column(db.Integer, nullable=True)
+  max_streak = db.Column(db.Integer, nullable=True)
+  last_sync = db.Column(db.DateTime, nullable=True,
       default=datetime.utcnow)
+
 
   def __str__(self):
     d = {
@@ -111,15 +112,25 @@ def get_and_update_user(username):
   db_query_result = User.query.filter_by(id=username)
   user = db_query_result.first()
   now = datetime.now()
-  # not updated in 60 mins
-  if user is not None and now - timedelta(minutes=60) < user.last_sync:
-    return user
+  # not updated in 1 day
+  if user is not None:
+    if now - timedelta(days=1) < user.last_sync:
+      return user
   print(pack2str('user[refresh]', user, now))
+
+  # save update time first
+  if user is None:
+    db.session.add(User(id=username))
+  else:
+    user.last_sync = now
+  db.session.commit()
+
   # get latest
   data = get_user(username)
   if data is None:
     save_invalid_username(username)
     return None
+
   # update
   if user is None:
     user = User(**data)
