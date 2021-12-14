@@ -15,7 +15,11 @@ def get_user(username):
   print(pack2str(href, res))
   # Not found returns None
   if res.status_code != 200:
-    return None
+    return {
+      'id': username,
+      'last_sync': datetime.now(),
+      'is_valid': False
+    }
   # get
   html = bs(res.text, 'html.parser')
   statics = html.select_one('#statics')
@@ -33,7 +37,8 @@ def get_user(username):
     'failed': failed,
     'submitted': submitted,
     'max_streak': max_streak,
-    'last_sync': datetime.now()
+    'last_sync': datetime.now(),
+    'is_valid': True
   }
 
 

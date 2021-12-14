@@ -57,6 +57,7 @@ class User(db.Model):
   max_streak = db.Column(db.Integer, nullable=True)
   last_sync = db.Column(db.DateTime, nullable=True,
       default=datetime.utcnow)
+  is_valid = db.Column(db.Boolean, nullable=True)
 
 
   def __str__(self):
@@ -68,12 +69,14 @@ class User(db.Model):
       'failed': self.failed,
       'submitted': self.submitted,
       'max_streak': self.max_streak,
-      'last_sync': self.last_sync
+      'last_sync': self.last_sync,
+      'is_valid': self.is_valid,
     }
     return str(d)
 
   def columns():
-    return ['id', 'rank', 'solved', 'psolved', 'failed', 'submitted', 'max_streak']
+    return ['id', 'rank', 'solved', 'psolved',
+      'failed', 'submitted', 'max_streak', 'is_valid']
 
   def get(self, key):
     if not key in User.columns():
@@ -81,55 +84,25 @@ class User(db.Model):
     return self.__dict__[key]
 
 
-def is_invalid_username(username):
-  DB_NAME = 'invalids'
-  data = storage.get_all(DB_NAME)
-  if 'last_sync' in data:
-    now = datetime.now()
-    last_sync = datetime.fromisoformat(data['last_sync'])
-    # too old, it needs to update
-    if now >= last_sync + timedelta(days=7):
-      return True
-  if not 'users' in data:
-    return False
-  return username in data['users']
-
-
-def save_invalid_username(username):
-  DB_NAME = 'invalids'
-  data = storage.get_all(DB_NAME)
-  data['last_sync'] = datetime.now().isoformat()
-  if not 'users' in data:
-    data['users'] = []
-  data['users'].append(username)
-  storage.save(DB_NAME, data)
-
-
 def get_and_update_user(username):
   print(pack2str('get_and_update_user', username))
-  if username is None or is_invalid_username(username):
+  if username is None:
     return None
   db_query_result = User.query.filter_by(id=username)
   user = db_query_result.first()
   now = datetime.now()
   # not updated in 1 day
   if user is not None:
-    if now - timedelta(days=1) < user.last_sync:
+    if not user.is_valid:
+      if now - timedelta(days=7) < user.last_sync:
+        return None
+    elif now - timedelta(days=1) < user.last_sync:
       return user
+    # if it is invalid, update for 7 days
   print(pack2str('user[refresh]', user, now))
-
-  # save update time first
-  if user is None:
-    db.session.add(User(id=username))
-  else:
-    user.last_sync = now
-  db.session.commit()
 
   # get latest
   data = get_user(username)
-  if data is None:
-    save_invalid_username(username)
-    return None
 
   # update
   if user is None:
@@ -138,7 +111,8 @@ def get_and_update_user(username):
   else:
     db_query_result.update(data)
   db.session.commit()
-  return user
+
+  return user if user.is_valid else None
 
 
 @app.route('/')
