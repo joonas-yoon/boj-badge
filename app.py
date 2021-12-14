@@ -1,6 +1,5 @@
 import os
 import logging
-import requests
 from flask import Flask, Response, request
 from flask_sqlalchemy import SQLAlchemy
 from bs4 import BeautifulSoup as bs
@@ -9,6 +8,7 @@ from utils import pack2str, default_label, deco_text, query_to_key
 from pybadges import badge as pybadge
 from parsing import get_user
 from exceptions import NoneError
+import storage
 
 APP_NAME = __name__
 
@@ -80,18 +80,46 @@ class User(db.Model):
     return self.__dict__[key]
 
 
+def is_invalid_username(username):
+  DB_NAME = 'invalids'
+  data = storage.get_all(DB_NAME)
+  if 'last_sync' in data:
+    now = datetime.now()
+    last_sync = datetime.fromisoformat(data['last_sync'])
+    # too old, it needs to update
+    if now >= last_sync + timedelta(days=7):
+      return True
+  if not 'users' in data:
+    return False
+  return username in data['users']
+
+
+def save_invalid_username(username):
+  DB_NAME = 'invalids'
+  data = storage.get_all(DB_NAME)
+  data['last_sync'] = datetime.now().isoformat()
+  if not 'users' in data:
+    data['users'] = []
+  data['users'].append(username)
+  storage.save(DB_NAME, data)
+
+
 def get_and_update_user(username):
   print(pack2str('get_and_update_user', username))
-  if username is None: return None
+  if username is None or is_invalid_username(username):
+    return None
   db_query_result = User.query.filter_by(id=username)
   user = db_query_result.first()
   now = datetime.now()
-  print(pack2str('user[before_update]', user, now))
   # not updated in 60 mins
   if user is not None and now - timedelta(minutes=60) < user.last_sync:
     return user
+  print(pack2str('user[refresh]', user, now))
   # get latest
   data = get_user(username)
+  if data is None:
+    save_invalid_username(username)
+    return None
   # update
   if user is None:
     user = User(**data)
@@ -114,7 +142,7 @@ def main():
     user = get_and_update_user(username)
     if user is None:
       raise NoneError
-    print(pack2str('user[after_update]', user))
+    print(pack2str('user', user))
     value = str(user.get(key))
     print(f'key={key} value={value} query={query}')
     badge = pybadge(left_text=label, right_text=deco_text(query, value), right_color=color)
