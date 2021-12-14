@@ -20,11 +20,11 @@ def get_user(username):
   html = bs(res.text, 'html.parser')
   statics = html.select_one('#statics')
   rank = get_as(statics.find('tr').find('td'), int)
-  submitted = get_as(html.select_one(f'a[href="/status?user_id={username}"]'), int)
-  solved = get_as(statics.select_one('#u-solved'), int)
-  psolved = get_as(statics.select_one('#u-psolved'), int)
-  failed = get_as(statics.select_one('#u-failed'), int)
-  max_streak = get_streak(res.text)
+  submitted = get_as(html.select_one(f'a[href="/status?user_id={username}"]'), int) or 0
+  solved = get_as(statics.select_one('#u-solved'), int) or 0
+  psolved = get_as(statics.select_one('#u-psolved'), int) or 0
+  failed = get_as(statics.select_one('#u-failed'), int) or 0
+  max_streak = get_streak(res.text) or 0
   return {
     'id': username,
     'rank': rank,
