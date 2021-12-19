@@ -93,13 +93,15 @@ def get_and_update_user(username):
   now = datetime.now()
   # not updated in 1 day
   if user is not None:
+    # if it is invalid, update for 7 days
     if not user.is_valid:
       if now - timedelta(days=7) < user.last_sync:
         return None
     elif now - timedelta(days=1) < user.last_sync:
       return user
-    # if it is invalid, update for 7 days
-  print(pack2str('user[refresh]', user, now))
+    db_query_result.update({'last_sync': now})
+  else:
+    print(pack2str('user[refresh]', user, now))
 
   # get latest
   data = get_user(username)
